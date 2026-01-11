@@ -158,7 +158,8 @@ input::placeholder, textarea::placeholder {
 }
 
 .notes-list__empty-message {
-  text-align: center;
+  text-align: left;
+  margin-left: 57px;
   color: #aaa;
 }
 

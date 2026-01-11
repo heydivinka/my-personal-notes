@@ -53,26 +53,32 @@ function NotesList({
             className="notes-group"
             data-testid={`${groupKey}-group`}
           >
-            <h3>
-              {groupDate.toLocaleString('id-ID', {
-                month: 'long',
-                year: 'numeric',
-              })}
-            </h3>
+            {/* HEADER BULAN */}
+            <div className="notes-group__header">
+              <h3>
+                {groupDate.toLocaleString('id-ID', {
+                  month: 'long',
+                  year: 'numeric',
+                })}
+              </h3>
 
-            <span data-testid={`${groupKey}-group-count`}>
-              {groupNotes.length} catatan
-            </span>
+              <span data-testid={`${groupKey}-group-count`}>
+                {groupNotes.length} catatan
+              </span>
+            </div>
 
-            {groupNotes.map((note) => (
-              <NoteItem
-                key={note.id}
-                note={note}
-                onDelete={onDelete}
-                onArchive={onArchive}
-                searchKeyword={searchKeyword}
-              />
-            ))}
+            {/* GRID KHUSUS UNTUK BULAN INI */}
+            <div className="notes-group__list">
+              {groupNotes.map((note) => (
+                <NoteItem
+                  key={note.id}
+                  note={note}
+                  onDelete={onDelete}
+                  onArchive={onArchive}
+                  searchKeyword={searchKeyword}
+                />
+              ))}
+            </div>
           </section>
         );
       })}

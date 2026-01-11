@@ -114,29 +114,24 @@ input::placeholder, textarea::placeholder {
 }
 
 .notes-list {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: minmax(min-content, max-content);
-  gap: 16px;
-  margin-bottom: 48px;
-}
-
-.notes-list--grouped {
   display: flex;
   flex-direction: column;
   gap: 32px;
+  margin-bottom: 48px;
 }
 
 .notes-group {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  margin-bottom: 2rem;
 }
 
 .notes-group__header {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
+  margin-bottom: 1rem;
 }
 
 .notes-group__title {
@@ -152,6 +147,13 @@ input::placeholder, textarea::placeholder {
 .notes-group__items {
   display: grid;
   grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+/* Mengubah notes-group__list menjadi grid horizontal */
+.notes-group__list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 16px;
 }
 
@@ -256,21 +258,21 @@ input::placeholder, textarea::placeholder {
 }
 
 @media only screen and (min-width: 500px) {
-  .notes-list {
+  .notes-group__items {
     grid-template-columns: 1fr 1fr;
   }
 
-  .notes-group__items {
-    grid-template-columns: 1fr 1fr;
+  .notes-group__list {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media only screen and (min-width: 800px) {
-  .notes-list {
+  .notes-group__items {
     grid-template-columns: repeat(3, 1fr);
   }
 
-  .notes-group__items {
+  .notes-group__list {
     grid-template-columns: repeat(3, 1fr);
   }
 
@@ -279,12 +281,12 @@ input::placeholder, textarea::placeholder {
   }
 }
 
-@media only screen and (min-width: 800px) {
-  .notes-list {
+@media only screen and (min-width: 1000px) {
+  .notes-group__items {
     grid-template-columns: repeat(4, 1fr);
   }
 
-  .notes-group__items {
+  .notes-group__list {
     grid-template-columns: repeat(4, 1fr);
   }
 }

@@ -55,10 +55,10 @@ class App extends React.Component {
     }));
   }
 
-  onSearchHandler(keyword) {
+  onSearchHandler(event) {
     // TODO [Skilled] simpan keyword ke state dan manfaatkan untuk memfilter catatan.
     this.setState({
-      searchKeyword: keyword,
+      searchKeyword: event.target.value,
     });
   }
 
@@ -89,6 +89,20 @@ class App extends React.Component {
       <div className="note-app" data-testid="note-app">
         <div className="note-app__header" data-testid="note-app-header">
           <h1>Notes</h1>
+
+          {/* TODO [Skilled] input pencarian catatan (case-insensitive) */}
+          <div
+            className="note-search"
+            data-testid="note-search"
+          >
+            <input
+              type="text"
+              placeholder="Cari berdasarkan judul ..."
+              value={searchKeyword}
+              onChange={this.onSearchHandler}
+              data-testid="note-search-input"
+            />
+          </div>
         </div>
 
         <div className="note-app__body" data-testid="note-app-body">
@@ -98,7 +112,9 @@ class App extends React.Component {
             aria-labelledby="active-notes-title"
             data-testid="active-notes-section"
           >
-            <h2 id="active-notes-title">Catatan Aktif</h2>
+            <h2 id="active-notes-title">
+              Catatan Aktif ({activeNotes.length})
+            </h2>
             <NotesList
               notes={activeNotes}
               onDelete={this.onDeleteHandler}
@@ -111,7 +127,9 @@ class App extends React.Component {
             aria-labelledby="archived-notes-title"
             data-testid="archived-notes-section"
           >
-            <h2 id="archived-notes-title">Arsip</h2>
+            <h2 id="archived-notes-title">
+              Arsip ({archivedNotes.length})
+            </h2>
             <NotesList
               notes={archivedNotes}
               onDelete={this.onDeleteHandler}

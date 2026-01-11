@@ -8,7 +8,9 @@ class NoteInput extends React.Component {
       // TODO [Basic] kelola nilai title sebagai controlled input.
       title: '',
       // TODO [Basic] kelola nilai body sebagai controlled textarea.
-      body: ''
+      body: '',
+      // TODO [Advanced] simpan pesan error validasi submit
+      errorMessage: '',
     };
 
     this.onTitleChangeEventHandler = this.onTitleChangeEventHandler.bind(this);
@@ -19,31 +21,65 @@ class NoteInput extends React.Component {
   onTitleChangeEventHandler(event) {
     // TODO [Basic] update state dengan nilai event.target.value.
     // TODO [Skilled] batasi judul maksimal 50 karakter dan tampilkan peringatan saat sisa karakter < 10.
-    console.warn('[TODO] Handle title change', event.target.value);
+    const inputTitle = event.target.value;
+
+    if (inputTitle.length <= 50) {
+      this.setState({
+        title: inputTitle,
+      });
+    }
   }
 
   onBodyChangeEventHandler(event) {
     // TODO [Basic] update state body agar textarea menjadi controlled component.
-    console.warn('[TODO] Handle body change', event.target.value);
+    this.setState({
+      body: event.target.value,
+      errorMessage: '', // reset error ketika user mengetik ulang
+    });
   }
 
   onSubmitEventHandler(event) {
     event.preventDefault();
 
-    // TODO [Basic] panggil props.addNote dengan data title & body dari state, lalu reset form.
+    const { title, body } = this.state;
+
     // TODO [Advanced] tolak submit ketika body kurang dari 10 karakter dan tampilkan pesan error.
-    console.warn('[TODO] Submit note', this.state);
+    if (body.trim().length < 10) {
+      this.setState({
+        errorMessage: 'Isi catatan minimal harus 10 karakter',
+      });
+      return;
+    }
+
+    // TODO [Basic] panggil props.addNote dengan data title & body dari state, lalu reset form.
+    this.props.addNote({
+      title: title.trim(),
+      body: body.trim(),
+    });
+
+    this.setState({
+      title: '',
+      body: '',
+      errorMessage: '',
+    });
   }
 
   render() {
+    const { title, body, errorMessage } = this.state;
+
     // TODO [Skilled] hitung sisa karakter jika menerapkan limit 50 karakter.
-    const remainingChars = 100; // update dengan nilai yang sesuai
+    const remainingChars = 50 - title.length;
 
     return (
       <div className="note-input" data-testid="note-input">
         <h2>Buat catatan</h2>
 
         {/* // TODO [Advanced] tampilkan pesan error menggunakan elemen dengan class note-input__feedback--error. */}
+        {errorMessage && (
+          <p className="note-input__feedback--error">
+            {errorMessage}
+          </p>
+        )}
 
         <form
           onSubmit={this.onSubmitEventHandler}
@@ -56,23 +92,26 @@ class NoteInput extends React.Component {
           >
             Sisa karakter: {remainingChars}
           </p>
+
           <input
             className="note-input__title"
             type="text"
             placeholder="Ini adalah judul ..."
-            value={this.state.title}
+            value={title}
             onChange={this.onTitleChangeEventHandler}
             required
             data-testid="note-input-title-field"
           />
+
           <textarea
             className="note-input__body"
             placeholder="Tuliskan catatanmu di sini ..."
-            value={this.state.body}
+            value={body}
             onChange={this.onBodyChangeEventHandler}
             required
             data-testid="note-input-body-field"
           />
+
           <button type="submit" data-testid="note-input-submit-button">
             Buat
           </button>

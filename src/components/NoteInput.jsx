@@ -70,6 +70,11 @@ class NoteInput extends React.Component {
     // TODO [Skilled] hitung sisa karakter jika menerapkan limit 50 karakter.
     const remainingChars = 50 - title.length;
 
+    // Tentukan class untuk counter (tambahkan --warn jika sisa <= 10)
+    const counterClass = remainingChars <= 10 
+      ? 'note-input__title__char-limit note-input__title__char-limit--warn'
+      : 'note-input__title__char-limit';
+
     return (
       <div className="note-input" data-testid="note-input">
         <h2>Buat catatan</h2>
@@ -87,7 +92,7 @@ class NoteInput extends React.Component {
         >
           {/* TODO [Skilled] tampilkan sisa karakter secara dinamis ketika limit judul diterapkan */}
           <p
-            className="note-input__title__char-limit"
+            className={counterClass}
             data-testid="note-input-title-remaining"
           >
             Sisa karakter: {remainingChars}
